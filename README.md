@@ -23,6 +23,10 @@ cd C:\Users\user\Desktop\yolo(모델이 있는 경로)
 python train.py(욜로모델)
 
 모델 돌릴때
+파일안에 모델,데이터셋(test,train,valid),data.yaml 같이 있어야함
+
+마우스와 키보드를 대신 조작하는 라이브러리
+pip install pyautogui
 파일안에 모델,데이터셋(test,train,valid),data.yaml 같이 있어야함.
 # 이때 data.yaml 파일을 올려놓을예정이고, 데이터셋이 들어있는 파일이름은 DataSet 파일이름으로 해결. 
 # 또한 새로 데이터셋을 다운받을경우 데이터셋안에 data.yaml파일 삭제하기(github에 올려놓은 것으로 통일한다)

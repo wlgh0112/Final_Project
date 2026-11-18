@@ -7,10 +7,10 @@ def main():
 
     model.train(
         data="data.yaml",
-        epochs=1,
+        epochs=10,
         imgsz=640,
         batch=2,
-        device="cpu",       # GPU가 없으면 "cpu"로 변경
+        device=0,       # GPU가 없으면 "cpu"로 변경
         project="runs",
         name="four_classes",
     )

@@ -4,15 +4,25 @@
 20231060 손하민
 20251066 조현빈
 
-# 가상환경 구축
-python -m pip install -U ultralytics "numpy==1.26.4" "opencv-python==4.11.0.86"
+#팀원 모두 가상환경 맞추기 위한 공통 세팅 과정
+#아래에 있는 명령어들을 vscode터미널에 순서대로 복사해서 붙여넣기
 
--아나콘다에서 실행
+1. 아나콘다 가상환경 테두리 만들기(yolo26이라는 환경 만들기)
 conda create -n yolo26 python=3.11 -y
 conda activate yolo26
 
+2. 모델 학습에 필요한 가상환경 구축 명령어
+python -m pip install -U ultralytics "numpy==1.26.4" "opencv-python==4.11.0.86"
+
+3. GPU를 사용하여 학습시키기 위해 GPU용 파이토치 만들기
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+
+실행 명령어 
 cd C:\Users\user\Desktop\yolo(모델이 있는 경로)
 python train.py(욜로모델)
 
 모델 돌릴때
-파일안에 모델,데이터셋(test,train,valid),data.yaml 같이 있어야함
+파일안에 모델,데이터셋(test,train,valid),data.yaml 같이 있어야함.
+# 이때 data.yaml 파일을 올려놓을예정이고, 데이터셋이 들어있는 파일이름은 DataSet 파일이름으로 해결. 
+# 또한 새로 데이터셋을 다운받을경우 데이터셋안에 data.yaml파일 삭제하기(github에 올려놓은 것으로 통일한다)

@@ -16,3 +16,6 @@ python train.py(욜로모델)
 
 모델 돌릴때
 파일안에 모델,데이터셋(test,train,valid),data.yaml 같이 있어야함
+
+마우스와 키보드를 대신 조작하는 라이브러리
+pip install pyautogui

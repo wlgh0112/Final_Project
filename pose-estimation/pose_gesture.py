@@ -8,6 +8,7 @@
   4) infer      : 웹캠에서 [포즈 모델 -> 분류기 -> 연속 프레임 안정화] 실행
 
 사용 예:
+  set KMP_DUPLICATE_LIB_OK=TRUE
   python pose_gesture.py train-pose --epochs 100
   python pose_gesture.py extract --root hand4 --pose runs/pose/train/weights/best.pt
   python pose_gesture.py train-clf --npz hand_feats.npz --out gesture_clf.joblib

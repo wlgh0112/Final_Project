@@ -15,6 +15,7 @@ conda activate yolo26
 python -m pip install -U ultralytics "numpy==1.26.4" "opencv-python==4.11.0.86"
 pip install pyyaml roboflow
 python -m pip install roboflow
+pip install pyautogui
 
 3. GPU를 사용하여 학습시키기 위해 GPU용 파이토치 만들기
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
@@ -29,6 +30,6 @@ python train.py(욜로모델)
 $env:ROBOFLOW_API_KEY="여기에_복사한_API키_붙여넣기"; python train.py
 
 마우스와 키보드를 대신 조작하는 라이브러리
-pip install pyautogui
+
 
 # 이때 data.yaml 파일을 올려놓을예정이고, 데이터셋이 들어있는 파일이름은 DataSet 파일이름으로 해결. 

@@ -1,6 +1,8 @@
 import os, shutil, sys, getpass
 from pathlib import Path
 import yaml
+import subprocess
+from pathlib import Path
 
 WORKSPACE, PROJECT, VERSION = "object-detection-mb16y", "old-hand-gestures-3", 1
 EPOCHS, IMGSZ, BATCH = 2, 640, 32
@@ -100,4 +102,15 @@ if __name__ == "__main__":
         flipud=0.0,
         patience=30,
     )
+
+# model.train(...) 실행 직후
+    best_path = Path(model.trainer.best).resolve()
+
     print(model.val())
+
+    # 경로를 Windows 클립보드에 자동 복사
+    subprocess.run(["clip"], input=str(best_path), text=True, check=True)
+
+    print("\n" + "=" * 60)
+    print(f"학습 완료! 클립보드에 자동 복사됨:\n{best_path}")
+    print("=" * 60)

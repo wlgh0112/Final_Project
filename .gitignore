@@ -4,6 +4,9 @@ __pycache__/
 
 # YOLO 데이터셋 폴더
 DataSet/
+hand4/
+old-hand-gestures-3-1/
+
 
 # YOLO 학습 결과 및 로그 폴더 (Ultralytics 자동 생성)
 runs/

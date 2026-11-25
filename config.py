@@ -1,7 +1,38 @@
 """설정 모음. 팀원이 코드 건드리지 않고 여기만 수정하면 되도록 분리."""
 
+# 모델 경로 찾기
+import subprocess
+from pathlib import Path
+
+DEFAULT_MODEL_PATH = "runs/detect/train-6/weights/best.pt"
+
+
+def resolve_model_path(default_path: str = DEFAULT_MODEL_PATH) -> str:
+    # 1순위: 클립보드에 실제 존재하는 .pt 파일 경로가 들어있는 경우
+    try:
+        clip = subprocess.check_output(
+            ["powershell", "-NoProfile", "-Command", "Get-Clipboard"],
+            text=True,
+            timeout=3,
+        ).strip().strip('"')
+        if clip.lower().endswith(".pt") and Path(clip).is_file():
+            return clip
+    except Exception:
+        pass
+
+    # 2순위: 클립보드가 다른 내용으로 덮였다면 runs/detect 아래 최신 best.pt 자동 탐색
+    candidates = list(Path("runs/detect").glob("**/weights/best.pt"))
+    if candidates:
+        latest = max(candidates, key=lambda p: p.stat().st_mtime)
+        return str(latest)
+
+    # 3순위: 기존 기본 경로 사용
+    return default_path
+
+
 # ---------- 모델 / 카메라 ----------
-MODEL_PATH = "runs/detect/runs/four_classes-3/weights/best.pt"   # 팀장 학습 결과 (실행 위치 기준 상대경로)
+MODEL_PATH = resolve_model_path()
+# ---------- 모델 / 카메라 ----------
 CAMERA_INDEX = 0
 FRAME_W, FRAME_H = 640, 480
 CONF_THRESHOLD = 0.5
@@ -21,13 +52,11 @@ COOLDOWN_SEC = 0.8            # 이산 동작(다음/이전 등) 재발동 대�
 # 키는 data.yaml의 names와 정확히 일치해야 함! (YOLO 파트장과 합의 필요)
 # 동작: next, prev, start, end, clear (이산) / pointer, draw (연속)
 GESTURE_ACTIONS = {
-    "two":   "next",      # 다음 슬라이드
-    "three": "prev",      # 이전 슬라이드
-    "five":  "pointer",   # 레이저 포인터
-    "one":   "draw",      # 판서(펜)
-    "four":  "clear",     # 판서 지우기
+    "right": "next",      # 다음 슬라이드
+    "left":  "prev",      # 이전 슬라이드
+    "palm":  "pointer",   # 레이저 포인터
+    "fist":  "clear",     # 판서 지우기 (또는 원하는 동작)
 }
-
 # 화면에 잠깐 뜨는 안내 문구
 ACTION_LABELS = {
     "next": "다음 슬라이드 ▶", "prev": "◀ 이전 슬라이드",

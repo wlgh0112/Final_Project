@@ -3,7 +3,7 @@ from pathlib import Path
 import yaml
 
 WORKSPACE, PROJECT, VERSION = "object-detection-mb16y", "old-hand-gestures-3", 1
-EPOCHS, IMGSZ, BATCH = 30, 640, 32
+EPOCHS, IMGSZ, BATCH = 2, 640, 32
 TARGET = ["right", "left", "fist", "palm"]   # 0:오른쪽 1:왼쪽 2:주먹 3:손펴기
 ALIASES = {"right": "right", "left": "left", "fist": "fist", "closed_fist": "fist",
            "palm": "palm", "open_palm": "palm"}
@@ -85,11 +85,19 @@ def remap(src: Path, dst: Path):
     return dst / "data.yaml"
 
 
-src = download()
-data_yaml = remap(src, OUT)
+if __name__ == "__main__":
+    src = download()
+    data_yaml = remap(src, OUT)
 
-from ultralytics import YOLO
-model = YOLO("yolo26n.pt")
-model.train(data=str(data_yaml), epochs=EPOCHS, imgsz=IMGSZ, batch=BATCH,
-            fliplr=0.0, flipud=0.0, patience=30)
-print(model.val())
+    from ultralytics import YOLO
+    model = YOLO("yolo26n.pt")
+    model.train(
+        data=str(data_yaml),
+        epochs=EPOCHS,
+        imgsz=IMGSZ,
+        batch=BATCH,
+        fliplr=0.0,
+        flipud=0.0,
+        patience=30,
+    )
+    print(model.val())
